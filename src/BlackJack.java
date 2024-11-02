@@ -125,7 +125,7 @@ public class BlackJack {
         }
         System.out.println();
 
-        for (int i = 0; i < playerCards.length; i++) {
+        for (int i = 0; i < playerCardsValues.length; i++) {
             playerCardsValues[i] = playerCards[i].replaceAll("[\\♣♦♥♠,]", "");
         }
 
@@ -147,9 +147,9 @@ public class BlackJack {
             } else {
                 continue;
             }
-        } while (countDealerCards != playerCards.length);
+        } while (countDealerCards != dealerCards.length);
 
-        for (int i = 0; i < dealerCards.length; i++) {
+        for (int i = 0; i < dealerCardsValues.length; i++) {
             dealerCardsValues[i] = dealerCards[i].replaceAll("[\\♣♦♥♠,]", "");
         }
 
