@@ -100,7 +100,10 @@ public class BlackJack {
         //region раздача карт
         int cardsCount = 2;
         String[] playerCards = new String[cardsCount];
+        String[] playerCardsValues = new String[playerCards.length];
+
         String[] dealerCards = new String[cardsCount];
+        String[] dealerCardsValues = new String[playerCards.length];
 
         int countPlayerCards = 0;
 
@@ -122,6 +125,15 @@ public class BlackJack {
         }
         System.out.println();
 
+        for (int i = 0; i < playerCards.length; i++) {
+            playerCardsValues[i] = playerCards[i].replaceAll("[\\♣♦♥♠,]", "");
+        }
+
+        for (int i = 0; i < playerCardsValues.length; i++) {
+            System.out.print(playerCardsValues[i] + " ");
+        }
+        System.out.println();
+
         int countDealerCards = 0;
 
         do {
@@ -137,10 +149,43 @@ public class BlackJack {
             }
         } while (countDealerCards != playerCards.length);
 
+        for (int i = 0; i < dealerCards.length; i++) {
+            dealerCardsValues[i] = dealerCards[i].replaceAll("[\\♣♦♥♠,]", "");
+        }
 
         for (int i = 0; i < dealerCards.length; i++) {
             System.out.print(dealerCards[i] + " ");
         }
+        System.out.println();
+
+        for (int i = 0; i < dealerCardsValues.length; i++) {
+            System.out.print(dealerCardsValues[i] + " ");
+        }
+        System.out.println();
+        //endregion
+
+        //region подсчет очков
+        int countPlayerPoints = 0;
+        int countDealerPoints = 0;
+
+
+        for (int i = 0; i < playerCardsValues.length; i++) {
+            for (int k = 0; k < cardRanks.length; k++) {
+                if (playerCardsValues[i].equals(cardRanks[k].rank)) {
+                    countPlayerPoints += cardRanks[k].value;
+                }
+            }
+        }
+        System.out.println("количество очков игрока:" + countPlayerPoints);
+
+        for (int i = 0; i < dealerCardsValues.length; i++) {
+            for (int k = 0; k < cardRanks.length; k++) {
+                if (dealerCardsValues[i].equals(cardRanks[k].rank)) {
+                    countDealerPoints += cardRanks[k].value;
+                }
+            }
+        }
+        System.out.println("количество очков диллера:" + countDealerPoints);
         //endregion
     }
 }
