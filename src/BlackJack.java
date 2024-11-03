@@ -265,7 +265,6 @@ public class BlackJack {
 
             }while (countDealerPoints<17);
         }
-        System.out.println(countDealerPoints);
         //endregion
 
         //region определение победителя
@@ -298,6 +297,9 @@ public class BlackJack {
             System.out.print(dealerCards[i] + " ");
         }
         System.out.println();
+
+        System.out.println("Количество очков игрока:"+ countPlayerPoints);
+        System.out.println("Количество очков диллера:"+ countDealerPoints);
 
     }
 }
