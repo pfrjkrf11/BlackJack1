@@ -4,21 +4,6 @@ import java.util.Scanner;
 public class BlackJack {
 
     //region создание карт
-    /*
-    Карточные масти на английском (suit):
-    ♣️ Трефы — clubs.
-    ♦️ Бубны — diamonds.
-    ♥️ Червы — hearts.
-    ♠️ Пики — spades.
-
-    Значение карты (rank):
-    Ace (Туз)
-    Jack (Валет / Джек)
-    Queen (Дама / Королева(
-    King (Король)
-    Joker (Джокер)
-    Остальные карты, с двойки по десятку, называются просто цифрой.
-     */
 
     enum CardSuit {
         DIAMONDS("♦"),
@@ -228,7 +213,13 @@ public class BlackJack {
                     for (int k = 0; k < cardRanks.length; k++) {
                         if (playerCardsValues[i].equals(cardRanks[k].rank)) {
                             countPlayerPoints += cardRanks[k].value;
+
                         }
+                    }
+                }
+                for (int i = 0; i < countPlayerCards; i++) {
+                    if (playerCardsValues[i].equals(cardRanks[12].rank) && countPlayerPoints > 18) {
+                        countPlayerPoints -= 10;
                     }
                 }
                 System.out.println("количество очков игрока:" + countPlayerPoints);
@@ -259,8 +250,15 @@ public class BlackJack {
                     for (int k = 0; k < cardRanks.length; k++) {
                         if (dealerCardsValues[i].equals(cardRanks[k].rank)) {
                             countDealerPoints += cardRanks[k].value;
+
                         }
                     }
+                }
+                for (int i = 0; i < countDealerCards; i++) {
+                    if (dealerCardsValues[i].equals(cardRanks[12].rank) && countDealerPoints > 18) {
+                        countDealerPoints -= 10;
+                    }
+
                 }
 
             } while (countDealerPoints < 17);
@@ -293,19 +291,34 @@ public class BlackJack {
 
         System.out.println();
 
-        System.out.println("Карты диллера:");
-        for (int i = 0; i < countDealerCards; i++) {
-            System.out.print(dealerCards[i] + " ");
-        }
-        System.out.println();
         System.out.println("Карты игрока:");
         for (int i = 0; i < countPlayerCards; i++) {
             System.out.print(playerCards[i] + " ");
         }
         System.out.println();
 
+        System.out.println("Карты диллера:");
+        for (int i = 0; i < countDealerCards; i++) {
+            System.out.print(dealerCards[i] + " ");
+        }
+        System.out.println();
+
         System.out.println("Количество очков игрока:" + countPlayerPoints);
         System.out.println("Количество очков диллера:" + countDealerPoints);
+
+//        String[] govno = {"Т", "Т"};
+//        for (int i = 0; i < govno.length; i++) {
+//            System.out.print(govno[i] + " ");
+//        }
+//        System.out.println();
+//
+//        for (int i = 0; i < govno.length; i++) {
+//            if (govno[i].contains(cardRanks[12].rank)) {
+//                System.out.print("ЖОПА");
+//            }
+//            System.out.println();
+//        }
+
 
     }
 }
