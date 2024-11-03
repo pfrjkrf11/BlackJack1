@@ -53,11 +53,11 @@ public class BlackJack {
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
 
-        String firtsMassage = "Добро пожаловать в игру Блэкджек!\n" +
+        String firstMassage = "Добро пожаловать в игру Блэкджек!\n" +
                 "Попробуйте обыграть дилера и набрать 21 очко, не превышая эту сумму.\n" +
                 "Желаем удачи и приятной игры!";
 
-        System.out.println(firtsMassage);
+        System.out.println(firstMassage);
         System.out.println();
         //region создание колоды
 
@@ -65,16 +65,16 @@ public class BlackJack {
         CardRank[] cardRanks = CardRank.values();
 
         String[] deck = new String[cardSuits.length * cardRanks.length];
-        int countCards = 0;
+        int countSuits = 0;
         int j = 0;
 
         for (int i = 1; i <= deck.length; i++) {
             if (i % 13 != 0) {
-                deck[i - 1] = cardRanks[j].rank + "" + cardSuits[countCards].suits;
+                deck[i - 1] = cardRanks[j].rank + "" + cardSuits[countSuits].suits;
                 j++;
             } else {
                 j = 0;
-                deck[i - 1] = cardRanks[cardRanks.length - 1].rank + "" + cardSuits[countCards++].suits;
+                deck[i - 1] = cardRanks[cardRanks.length - 1].rank + "" + cardSuits[countSuits++].suits;
             }
         }
 
@@ -225,7 +225,7 @@ public class BlackJack {
                     }
                 }
                 for (int i = 0; i < countPlayerCards; i++) {
-                    if (playerCardsValues[i].equals(cardRanks[12].rank) && countPlayerPoints > 18) {
+                    if (playerCardsValues[i].equals(cardRanks[12].rank) && countPlayerPoints > 21) {
                         countPlayerPoints -= 10;
                     }
                 }
@@ -262,7 +262,7 @@ public class BlackJack {
                     }
                 }
                 for (int i = 0; i < countDealerCards; i++) {
-                    if (dealerCardsValues[i].equals(cardRanks[12].rank) && countDealerPoints > 18) {
+                    if (dealerCardsValues[i].equals(cardRanks[12].rank) && countDealerPoints > 21) {
                         countDealerPoints -= 10;
                     }
 
@@ -273,6 +273,7 @@ public class BlackJack {
         //endregion
 
         //region определение победителя
+        System.out.println();
         if (countDealerPoints == 21 && countPlayerPoints == 21) {
             System.out.println("Ничья! У Вас и диллера 21!");
         } else if (countPlayerPoints == 21) {
@@ -287,11 +288,11 @@ public class BlackJack {
             System.out.println("Вы проиграли(");
         } else if (countPlayerPoints > countDealerPoints) {
             System.out.println("Вы выиграли!");
-        }
-
-        if (countDealerPoints == countPlayerPoints) {
+        }else if(countDealerPoints == countPlayerPoints){
             System.out.println("Ничья!");
         }
+
+
 
 
         //endregion
