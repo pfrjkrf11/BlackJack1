@@ -306,19 +306,5 @@ public class BlackJack {
         System.out.println("Количество очков игрока:" + countPlayerPoints);
         System.out.println("Количество очков диллера:" + countDealerPoints);
 
-//        String[] govno = {"Т", "Т"};
-//        for (int i = 0; i < govno.length; i++) {
-//            System.out.print(govno[i] + " ");
-//        }
-//        System.out.println();
-//
-//        for (int i = 0; i < govno.length; i++) {
-//            if (govno[i].contains(cardRanks[12].rank)) {
-//                System.out.print("ЖОПА");
-//            }
-//            System.out.println();
-//        }
-
-
     }
 }
