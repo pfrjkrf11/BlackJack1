@@ -52,6 +52,13 @@ public class BlackJack {
 
         Scanner scanner = new Scanner(System.in);
         Random random = new Random();
+
+        String firtsMassage = "Добро пожаловать в игру Блэкджек!\n" +
+                "Попробуйте обыграть дилера и набрать 21 очко, не превышая эту сумму.\n" +
+                "Желаем удачи и приятной игры!";
+
+        System.out.println(firtsMassage);
+        System.out.println();
         //region создание колоды
 
         CardSuit[] cardSuits = CardSuit.values();
