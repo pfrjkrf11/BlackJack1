@@ -1,5 +1,5 @@
-import java.util.Arrays;
 import java.util.Random;
+import java.util.Scanner;
 
 public class BlackJack {
 
@@ -64,8 +64,10 @@ public class BlackJack {
 
 
     public static void main(String[] args) {
-        //region создание колоды
+
+        Scanner scanner = new Scanner(System.in);
         Random random = new Random();
+        //region создание колоды
 
         CardSuit[] cardSuits = CardSuit.values();
         CardRank[] cardRanks = CardRank.values();
@@ -98,7 +100,7 @@ public class BlackJack {
         //endregion
 
         //region раздача карт
-        int cardsCount = 2;
+        int cardsCount = 10;
         String[] playerCards = new String[cardsCount];
         String[] playerCardsValues = new String[playerCards.length];
 
@@ -106,6 +108,7 @@ public class BlackJack {
         String[] dealerCardsValues = new String[playerCards.length];
 
         int countPlayerCards = 0;
+        int firstHand = 2;
 
         do {
             int index = random.nextInt(0, 52);
@@ -118,21 +121,17 @@ public class BlackJack {
             } else {
                 continue;
             }
-        } while (countPlayerCards != playerCards.length);
+        } while (countPlayerCards != firstHand);
 
-        for (int i = 0; i < playerCards.length; i++) {
+        System.out.println("Карты игрока:");
+        for (int i = 0; i < firstHand; i++) {
             System.out.print(playerCards[i] + " ");
         }
         System.out.println();
 
-        for (int i = 0; i < playerCardsValues.length; i++) {
+        for (int i = 0; i < firstHand; i++) {
             playerCardsValues[i] = playerCards[i].replaceAll("[\\♣♦♥♠,]", "");
         }
-
-        for (int i = 0; i < playerCardsValues.length; i++) {
-            System.out.print(playerCardsValues[i] + " ");
-        }
-        System.out.println();
 
         int countDealerCards = 0;
 
@@ -147,45 +146,158 @@ public class BlackJack {
             } else {
                 continue;
             }
-        } while (countDealerCards != dealerCards.length);
+        } while (countDealerCards != firstHand);
 
-        for (int i = 0; i < dealerCardsValues.length; i++) {
+        for (int i = 0; i < firstHand; i++) {
             dealerCardsValues[i] = dealerCards[i].replaceAll("[\\♣♦♥♠,]", "");
         }
 
-        for (int i = 0; i < dealerCards.length; i++) {
-            System.out.print(dealerCards[i] + " ");
+        System.out.println("Карты диллера:");
+        for (int i = 0; i < firstHand; i++) {
+            if (i % 2 == 0) {
+                System.out.print(dealerCards[i] + " ");
+            } else System.out.print("X");
         }
         System.out.println();
 
-        for (int i = 0; i < dealerCardsValues.length; i++) {
-            System.out.print(dealerCardsValues[i] + " ");
-        }
-        System.out.println();
         //endregion
 
-        //region подсчет очков
+        //region подсчет очков после раздачи
         int countPlayerPoints = 0;
         int countDealerPoints = 0;
 
 
-        for (int i = 0; i < playerCardsValues.length; i++) {
+        for (int i = 0; i < countPlayerCards; i++) {
             for (int k = 0; k < cardRanks.length; k++) {
                 if (playerCardsValues[i].equals(cardRanks[k].rank)) {
                     countPlayerPoints += cardRanks[k].value;
                 }
             }
         }
-        System.out.println("количество очков игрока:" + countPlayerPoints);
+        System.out.println("количество очков игрока после раздачи:" + countPlayerPoints);
 
-        for (int i = 0; i < dealerCardsValues.length; i++) {
+        for (int i = 0; i < countDealerCards; i++) {
             for (int k = 0; k < cardRanks.length; k++) {
                 if (dealerCardsValues[i].equals(cardRanks[k].rank)) {
                     countDealerPoints += cardRanks[k].value;
                 }
             }
         }
-        System.out.println("количество очков диллера:" + countDealerPoints);
         //endregion
+
+        //region игра
+        boolean isTaking = true;
+
+        while (isTaking == true) {
+            for (int i = 0; i < 2; i++) {
+                System.out.println();
+            }
+            int indexAddCard = random.nextInt(0, 52);
+            int itteration = 0;
+
+            System.out.println("Добавить карту?");
+            System.out.println("Если хотите добавить карту введите <hit>, если хотите остановить введите <stand>:");
+            String addCard = scanner.nextLine();
+
+            if (addCard.equals("hit")) {
+                do {
+                    if (deck[indexAddCard] != null) {
+                        playerCards[countPlayerCards] = deck[indexAddCard];
+                        playerCardsValues[countPlayerCards] = deck[indexAddCard].replaceAll("[\\♣♦♥♠,]", "");
+
+                        countPlayerCards++;
+
+                        deck[indexAddCard] = null;
+                        itteration++;
+                    } else {
+                        continue;
+                    }
+                } while (itteration != 1);
+
+                System.out.println("Карты игрока: ");
+                for (int i = 0; i < countPlayerCards; i++) {
+                    System.out.print(playerCards[i] + " ");
+                }
+                System.out.println();
+
+
+            }
+            if (addCard.equals("hit")) {
+                countPlayerPoints = 0;
+                for (int i = 0; i < countPlayerCards; i++) {
+                    for (int k = 0; k < cardRanks.length; k++) {
+                        if (playerCardsValues[i].equals(cardRanks[k].rank)) {
+                            countPlayerPoints += cardRanks[k].value;
+                        }
+                    }
+                }
+                System.out.println("количество очков игрока:" + countPlayerPoints);
+
+            }
+            if (addCard.equals("stand")) {
+                isTaking = false;
+            }
+
+        }
+        //endregion
+
+        //region добавление карт диллера
+        if(countDealerPoints<17){
+            do{
+                int indexAddCardDealer = random.nextInt(0,52);
+                if (deck[indexAddCardDealer] != null) {
+                    dealerCards[countDealerCards] = deck[indexAddCardDealer];
+                    dealerCardsValues[countDealerCards] = deck[indexAddCardDealer].replaceAll("[\\♣♦♥♠,]", "");
+
+                    countDealerCards++;
+                    deck[indexAddCardDealer] = null;
+                } else {
+                    continue;
+                }
+                countDealerPoints = 0;
+                for (int i = 0; i < countDealerCards; i++) {
+                    for (int k = 0; k < cardRanks.length; k++) {
+                        if (dealerCardsValues[i].equals(cardRanks[k].rank)) {
+                            countDealerPoints += cardRanks[k].value;
+                        }
+                    }
+                }
+
+            }while (countDealerPoints<17);
+        }
+        System.out.println(countDealerPoints);
+        //endregion
+
+        //region определение победителя
+        if(countDealerPoints==21 && countPlayerPoints==21){
+            System.out.println("Ничья! У Вас и диллера 21!");
+        }
+        else if(countPlayerPoints==21){
+            System.out.println("Вы победили! У вас 21!");
+        } else if (countDealerPoints==21) {
+            System.out.println("У диллера 21! К сожалению, вы проиграли(");
+        }else if (countPlayerPoints>21){
+            System.out.println("К сожалению, вы проиграли. У вас перебор");
+        }else if(countDealerPoints>21){
+            System.out.println("Вы выиграли! У диллера перебор");
+        } else if (countDealerPoints > countPlayerPoints) {
+            System.out.println("Вы проиграли(");
+        } else if (countPlayerPoints > countDealerPoints) {
+            System.out.println("Вы выиграли!");
+        }
+
+        if(countDealerPoints==countPlayerPoints){
+            System.out.println("Ничья!");
+        }
+
+
+        //endregion
+
+        System.out.println("Карты диллера:");
+        for (int i = 0; i < countDealerCards; i++) {
+            System.out.print(dealerCards[i] + " ");
+        }
+        System.out.println();
+
     }
 }
