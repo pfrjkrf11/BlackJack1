@@ -189,7 +189,7 @@ public class BlackJack {
         boolean isTaking = true;
 
         while (isTaking == true) {
-            for (int i = 0; i < 2; i++) {
+            for (int i = 0; i < 3; i++) {
                 System.out.println();
             }
             int indexAddCard = random.nextInt(0, 52);
@@ -242,9 +242,9 @@ public class BlackJack {
         //endregion
 
         //region добавление карт диллера
-        if(countDealerPoints<17){
-            do{
-                int indexAddCardDealer = random.nextInt(0,52);
+        if (countDealerPoints < 17) {
+            do {
+                int indexAddCardDealer = random.nextInt(0, 52);
                 if (deck[indexAddCardDealer] != null) {
                     dealerCards[countDealerCards] = deck[indexAddCardDealer];
                     dealerCardsValues[countDealerCards] = deck[indexAddCardDealer].replaceAll("[\\♣♦♥♠,]", "");
@@ -263,21 +263,20 @@ public class BlackJack {
                     }
                 }
 
-            }while (countDealerPoints<17);
+            } while (countDealerPoints < 17);
         }
         //endregion
 
         //region определение победителя
-        if(countDealerPoints==21 && countPlayerPoints==21){
+        if (countDealerPoints == 21 && countPlayerPoints == 21) {
             System.out.println("Ничья! У Вас и диллера 21!");
-        }
-        else if(countPlayerPoints==21){
+        } else if (countPlayerPoints == 21) {
             System.out.println("Вы победили! У вас 21!");
-        } else if (countDealerPoints==21) {
+        } else if (countDealerPoints == 21) {
             System.out.println("У диллера 21! К сожалению, вы проиграли(");
-        }else if (countPlayerPoints>21){
+        } else if (countPlayerPoints > 21) {
             System.out.println("К сожалению, вы проиграли. У вас перебор");
-        }else if(countDealerPoints>21){
+        } else if (countDealerPoints > 21) {
             System.out.println("Вы выиграли! У диллера перебор");
         } else if (countDealerPoints > countPlayerPoints) {
             System.out.println("Вы проиграли(");
@@ -285,21 +284,28 @@ public class BlackJack {
             System.out.println("Вы выиграли!");
         }
 
-        if(countDealerPoints==countPlayerPoints){
+        if (countDealerPoints == countPlayerPoints) {
             System.out.println("Ничья!");
         }
 
 
         //endregion
 
+        System.out.println();
+
         System.out.println("Карты диллера:");
         for (int i = 0; i < countDealerCards; i++) {
             System.out.print(dealerCards[i] + " ");
         }
         System.out.println();
+        System.out.println("Карты игрока:");
+        for (int i = 0; i < countPlayerCards; i++) {
+            System.out.print(playerCards[i] + " ");
+        }
+        System.out.println();
 
-        System.out.println("Количество очков игрока:"+ countPlayerPoints);
-        System.out.println("Количество очков диллера:"+ countDealerPoints);
+        System.out.println("Количество очков игрока:" + countPlayerPoints);
+        System.out.println("Количество очков диллера:" + countDealerPoints);
 
     }
 }
